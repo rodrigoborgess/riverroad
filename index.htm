@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Display</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { display: flex; height: 100vh; background: black; overflow: hidden; }
+        .video-container { width: 70%; height: 100vh; }
+        .video-container iframe { width: 100%; height: 100%; border: none; }
+        .carousel-container { width: 30%; height: 100vh; position: relative; }
+        .carousel-container img { 
+            position: absolute;
+            width: 100%; height: 100%; object-fit: cover;
+            opacity: 0; transition: opacity 1s ease-in-out;
+        }
+        .carousel-container img.active { opacity: 1; }
+
+        /* Style for the logo */
+        .logo {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 100px; /* Set the size of the logo */
+            height: 100px;
+            background-image: url('https://www.riverroadcafe.ca/web/image/website/1/logo/RiverRoadCafe?unique=e296538'); /* Replace with your logo path */
+            background-size: cover;
+            background-position: center;
+            z-index: 10; /* Ensure the logo is on top of the carousel */
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <iframe width="1280" height="720" src="https://www.youtube.com/embed/AEMwQ8hFC2E?autoplay=1&vq=hd1080&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <div class="carousel-container">
+        <img src="river_road_food_0.jpg" class="active" alt="Food Image 0">
+        <img src="river_road_food_1.jpg" alt="Food Image 1">
+        <img src="river_road_food_2.jpg" alt="Food Image 2">
+        <img src="river_road_food_3.jpg" alt="Food Image 3">
+        <img src="river_road_food_4.jpg" alt="Food Image 4">
+        <img src="river_road_food_5.jpg" alt="Food Image 5">
+    </div>
+    <!-- Logo div -->
+    <div class="logo"></div>
+
+    <script>
+        let images = document.querySelectorAll('.carousel-container img');
+        let currentIndex = 0;
+        
+        function showNextImage() {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
+        }
+        setInterval(showNextImage, 3000);
+    </script>
+</body>
+</html>
