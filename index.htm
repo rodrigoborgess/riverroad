@@ -31,31 +31,50 @@
         }
     </style>
 </head>
-<body>
+<body>    
     <div class="video-container">
         <iframe width="1280" height="720" src="https://www.youtube.com/embed/qB5m58apEcs?autoplay=1&vq=hd1080&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
-    <div class="carousel-container">
-        <img src="river_road_food_0.jpg" class="active" alt="Food Image 0">
-        <img src="river_road_food_1.jpg" alt="Food Image 1">
-        <img src="river_road_food_2.jpg" alt="Food Image 2">
-        <img src="river_road_food_3.jpg" alt="Food Image 3">
-        <img src="river_road_food_4.jpg" alt="Food Image 4">
-        <img src="river_road_food_5.jpg" alt="Food Image 5">
+    <div id="carousel-container" class="carousel-container">
+
     </div>
     <!-- Logo div -->
     <div class="logo"></div>
 
     <script>
-        let images = document.querySelectorAll('.carousel-container img');
+        fetch("https://script.google.com/macros/s/AKfycbxCCL_dgYezh7az6lM0XUuquBvZcsi9wdD9QoTCwEIrbW3oFgfayWWNNI-2wBkvg8TgCg/exec")
+        .then(response => response.json())
+        .then(data => {
+            let imgContainer = document.getElementById("carousel-container");
+
+            data.forEach((row, index) => {
+                let img = document.createElement("img");
+                img.src = row.TV_Image_URL;
+                img.alt = "Carousel Image";
+                
+                if (index === 0) {
+                    img.classList.add("active"); // ✅ Set the first image as active
+                }
+
+                imgContainer.appendChild(img);
+            });
+
+            startCarousel(); // ✅ Start the carousel only after images are added
+        })
+        .catch(error => console.error("Error fetching data:", error));
+
+    function startCarousel() {
+        let images = document.querySelectorAll("#carousel-container img");
         let currentIndex = 0;
-        
+
         function showNextImage() {
-            images[currentIndex].classList.remove('active');
+            images[currentIndex].classList.remove("active");
             currentIndex = (currentIndex + 1) % images.length;
-            images[currentIndex].classList.add('active');
+            images[currentIndex].classList.add("active");
         }
+
         setInterval(showNextImage, 3000);
+    }
     </script>
 </body>
 </html>
